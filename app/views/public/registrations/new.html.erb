@@ -4,27 +4,27 @@
   <%= render "public/shared/error_messages", resource: resource %>
 
    <div class="field">
-    <%= f.label :encrypted_password, "ユーザー名（表示名）" %><br />
-    <%= f.email_field :encrypted_password %>
+     <%= f.label :screen_name, "ユーザー名" %><br>
+     <%= f.text_field :screen_name %>
   </div>
 
   <div class="field">
     <%= f.label :name, "名前" %><br />
-    <%= f.email_field :name %>
+    <%= f.text_field :name %>
   </div>
 
   <div class="field">
     <%= f.label :name_kana, "名前（カナ）" %><br />
-    <%= f.email_field :name_kana %>
+    <%= f.text_field :name_kana %>
   </div>
 
   <div class="gender-field">
-    <%= f.label :gender, "性別" %>
+    <%= f.label :gender, "性別" %><br>
     <%= f.radio_button :gender, "others" %>
-    <%= f.label :gender, "指定なし" %>
+    <%= f.label :gender, "指定なし" %><br>
 
     <%= f.radio_button :gender, "male" %>
-    <%= f.label :gender, "男性" %>
+    <%= f.label :gender, "男性" %><br>
 
     <%= f.radio_button :gender, "female" %>
     <%= f.label :gender, "女性" %>
@@ -36,7 +36,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :passwor, "パスワード" %>
+    <%= f.label :password, "パスワード" %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %>文字以上)</em>
     <% end %><br />

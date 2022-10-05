@@ -6,6 +6,16 @@ class Public::SessionsController < Devise::SessionsController
     sign_in end_user
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
+
+  def after_sign_in_path_for(resource)
+    if current_end_user
+        flash[:notice] = "ログインに成功しました"
+       end_user_path(current_end_user)
+    else
+      root_path
+    end
+  end
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
