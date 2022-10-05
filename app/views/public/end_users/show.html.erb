@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+  <% if end_user_signed_in? && @end_user == current_end_user %>
+    <h3 class="font-weight-normal mt-5 mb-5">マイページ</h3>
+  <% else %>
+    <h1 class="font-weight-normal mt-5 mb-5"><%= @end_user.screen_name %>さんのページ</h1>
+  <% end %>
+ </div>
+<div class="row justify-content-center">
+  <% unless @end_user.profile_image.attached? %>
+     <%= image_tag @end_user.profile_image(100,100) %>
+  <% else %>
+    <%= image_tag "no_image.jpg" %>
+ <% end %>
+    <div class="offset-1">
+      <%= @end_user.screen_name %>
+    </div>
+</div>
+<div style="text-align: center">
+  <%= @end_user.biography %>
+  <%= link_to 'ユーザー編集', edit_end_user_path(current_end_user), class: "btn btn-primary offset-3" %>
+</div>
+<div class="row justify-content-center">
+  <%# @tweets.each do |tweet| %>
+  <%# end %>
+</div>
+
