@@ -10,14 +10,17 @@
      <%= image_tag @end_user.profile_image(100,100) %>
   <% else %>
     <%= image_tag "no_image.jpg" %>
- <% end %>
-    <div class="offset-1">
-      <%= @end_user.screen_name %>
-    </div>
+  <% end %>
+  <div class="offset-1">
+    <P>表示状態　<%= @end_user.status_i18n %></P>
+    <%= @end_user.screen_name %><br>
+    <%= @end_user.biography %><br>
+  </div>
 </div>
-<div style="text-align: center">
-  <%= @end_user.biography %>
-  <%= link_to 'ユーザー編集', edit_end_user_path(current_end_user), class: "btn btn-primary offset-3" %>
+<div class="row justify-content-center">
+  <% if end_user_signed_in? && @end_user == current_end_user %>
+    <%= link_to 'ユーザー編集', edit_end_user_path(current_end_user), class: "btn btn-primary offset-2" %>
+  <% end %>
 </div>
 <div class="row justify-content-center">
   <%# @tweets.each do |tweet| %>
