@@ -23,4 +23,7 @@ class EndUser < ApplicationRecord
     profile_image.variant(resize_to_limit: [100, 100]).processed
   end
 
+  def active_for_authentication?
+    super && (is_deleted == false)
+  end
 end
