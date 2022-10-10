@@ -12,17 +12,17 @@
   </head>
   <div class="container">
     <header class="row">
+      <%= notice %>
       <% if end_user_signed_in? %>
         <div><%= link_to "トップ", root_path %></div>
         <div class=pl-2><%= link_to "マイページ", end_user_path(current_end_user) %></div>
         <div><%#= link_to "投稿する", new_post_path, class: "text-white" %></div>
         <div><%#= link_to "投稿一覧", posts_path, class: "text-white" %></div>
         <div class=pl-2><%= link_to "ログアウト", destroy_end_user_session_path, method: :delete %></div>
+        <div class=pl-2><%= link_to "退会する", end_user_unsubscribe_path %></div>
       <% end %>
     </header>
   </div>
-
-
   <body>
     <%= yield %>
   </body>

@@ -6,10 +6,10 @@
   <% end %>
  </div>
 <div class="row justify-content-center">
-  <% unless @end_user.profile_image.attached? %>
-     <%= image_tag @end_user.profile_image(100,100) %>
+  <% if @end_user.profile_image.attached? %>
+    <%= image_tag @end_user.profile_image %>
   <% else %>
-    <%= image_tag "no_image.jpg" %>
+    <%= image_tag ("no_image.jpg") %>
   <% end %>
   <div class="offset-1">
     <P>表示状態　<%= @end_user.status_i18n %></P>
