@@ -64,3 +64,11 @@ gem "enum_help"
 gem "net-smtp"
 
 gem 'kaminari','~> 1.2.1'
+
+gem "gmaps4rails"
+
+gem 'dotenv-rails'
+
+gem "gon"
+
+gem 'geocoder'

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  namespace :public do
+    get 'tweets/show'
+    get 'tweets/edit'
+    get 'tweets/index'
+  end
  devise_for :end_users, skip: [:passwords], controllers: {
   registrations: "public/registrations",
   sessions: 'public/sessions'
@@ -17,6 +22,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
         patch 'end_user/release' => "end_users#release"
         patch 'end_user/nonrelease' => "end_users#nonrelease"
         resources :end_users, only: [:show, :edit, :update]
+        resources :tweets, only: [:show, :edit, :index, :update, :new, :create, :destroy]
   end
 
   devise_scope :end_user do
