@@ -14,16 +14,16 @@
   <div class="form_group">
     <%= f.label :latitude, "経度" %><br>
     <%= f.text_field :latitude, id: :lat %><br>
-    <%= f.label :lomgitude, "緯度" %><br>
-    <%= f.text_field :lomgitude, id: :lng %>
+    <%= f.label :longitude, "緯度" %><br>
+    <%= f.text_field :longitude, id: :lng %>
   </div>
   <div>
     <%= f.submit "投稿する", class: 'btn btn-success' %>
   </div>
+  <input name="tweet[address]" id="address" type="textbox">
+  <input type="button" value="検索" onclick="codeAddress()">
 <% end %>
 
-<input id="address" type="textbox" value="GeekSalon">
-<input type="button" value="検索" onclick="codeAddress()">
 <div id='map'>
 </div>
 
@@ -35,15 +35,16 @@
 
 <script>
 
-let map
-let marker
+var map;
+var marker;
+var infoWindow;
 
 function initMap(){
   geocoder = new google.maps.Geocoder()
 
     map = new google.maps.Map(document.getElementById('map'), {
     center:  {lat: 35.6803997, lng:139.7690174},
-    zoom: 15,
+    zoom: 8,
 
   });
 }

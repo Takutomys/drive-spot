@@ -7,9 +7,8 @@ class CreateTweets < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.text :introduction, null: false
       t.string :address, null: false
-      t.string :image, null: false
       t.float :latitude, null: false
-      t.float :lomgitude, null: false
+      t.float :longitude, null: false
     end
   end
 end

@@ -1,1 +1,70 @@
 <h2>投稿一覧</h2>
+<% @tweets.each do |tweet| %>
+　<%= tweet.end_user.screen_name %><br>
+  <% if tweet.image.attached? %>
+    <%= image_tag tweet.image %>M<br>
+  <% else %>
+    <%= image_tag ("no_image.jpg") %><br>
+  <% end %>
+  <%= link_to "編集", edit_tweet_path(tweet) %><br>
+  <% if tweet.favorited_by?(current_end_user) %>
+    <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
+     ♥<%= tweet.favorites.count %> いいね
+    <% end %>
+    <% else %>
+     <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
+        ♡<%= tweet.favorites.count %> いいね
+     <% end %>
+  <% end %>
+  <%= tweet.name %><br>
+  <%= tweet.created_at.strftime('%Y/%m/%d') %>
+<% end %>
+
+<div id='map'>
+</div>
+<style>
+  #map{
+    height: 400px;
+  }
+</style>
+<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
+<script>
+let map;
+let marker = []; // マーカーを複数表示させたいので、配列化
+let infoWindow = []; // 吹き出しを複数表示させたいので、配列化
+const tweets = gon.tweets; // コントローラーで定義したインスタンス変数を変数に代入
+const first_latitude = gon.first_latitude; // コントローラーで定義したインスタンス変数を変数に代入
+const first_longitude = gon.first_longitude; // コントローラーで定義したインスタンス変数を変数に代入
+
+
+function initMap(){
+  let map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: parseFloat(first_latitude), lng: parseFloat(first_longitude) },
+    zoom: 12
+  });
+
+  // forは繰り返し処理
+  // 変数iを0と定義し、
+  // その後gonで定義したusers分繰り返し加える処理を行う
+  for (let i = 0; i < tweets.length; i++) {
+    marker[i] = new google.maps.Marker({
+        map: map,
+        position: {lat: tweets[i].latitude, lng: tweets[i].longitude }
+    });
+
+    // 変数iを変数idに代入
+    let id = tweets[i]['id']
+    // infoWindowは吹き出し
+    infoWindow[i] = new google.maps.InfoWindow({
+    // contentで中身を指定
+    // 今回は文字にリンクを貼り付けた形で表示
+      content: `<a href='/tweets/${id}'>${tweets[i].name}</a>`
+    });
+    // markerがクリックされた時、
+    marker[i].addListener("click", function(){
+        // infoWindowを表示
+        infoWindow[i].open(map, marker[i]);
+    });
+  }
+}
+</script>

@@ -4,9 +4,9 @@ class Public::TweetsController < ApplicationController
   end
 
   def create
-    @tweet = Tweet.new(tweet_params)
+    @tweet = current_end_user.tweets.new(tweet_params)
     @tweet.save
-    redirect_to tweet_path(@tweet.id)
+    redirect_to tweets_path
   end
 
   def show
@@ -16,6 +16,11 @@ class Public::TweetsController < ApplicationController
   end
 
   def index
+    @tweets = Tweet.all
+    gon.tweets = Tweet.eager_load(:end_user)
+    gon.first_latitude = Tweet.all.first.latitude
+    gon.first_longitude = Tweet.all.first.longitude
+
   end
 
   def update
@@ -27,6 +32,6 @@ class Public::TweetsController < ApplicationController
   private
 
   def tweet_params
-     params.require(:tweet).permit(:end_user_id, :name, :introduction, :address, :image, :latitude, :lomgitude)
+     params.require(:tweet).permit(:end_user_id, :name, :introduction, :latitude, :longitude, :address)
   end
 end
