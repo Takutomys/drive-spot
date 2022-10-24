@@ -1,4 +1,4 @@
-<h2>投稿一覧</h2>
+<h2>新着投稿</h2>
 <% @tweets.each do |tweet| %>
 　<%= tweet.end_user.screen_name %><br>
   <% if tweet.image.attached? %>
@@ -9,16 +9,23 @@
   <%= link_to "編集", edit_tweet_path(tweet) %><br>
   <% if tweet.favorited_by?(current_end_user) %>
     <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
-     ♥<%= tweet.favorites.count %> いいね
+     ♥<%= tweet.favorites.count %> いいね<br>
     <% end %>
     <% else %>
      <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
-        ♡<%= tweet.favorites.count %> いいね
+        ♡<%= tweet.favorites.count %> いいね<br>
      <% end %>
   <% end %>
   <%= tweet.name %><br>
-  <%= tweet.created_at.strftime('%Y/%m/%d') %>
+  <%= tweet.created_at.strftime('%Y/%m/%d') %><br>
+  <%= link_to "詳細ページへ", tweet_path(tweet), class: "btn btn-primary" %>
 <% end %>
+<div class="row justify-content-center">
+  <%= form_with url: tweets_path, method: :get, local: true do |f| %>
+    <P>投稿場所を検索　<%= f.text_field :search %>
+    <%= f.submit '検索する', name: nil %></p
+  <% end %>
+</div>  
 
 <div id='map'>
 </div>
@@ -38,7 +45,7 @@ const first_longitude = gon.first_longitude; // コントローラーで定義�
 
 
 function initMap(){
-  let map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: parseFloat(first_latitude), lng: parseFloat(first_longitude) },
     zoom: 12
   });
@@ -67,4 +74,5 @@ function initMap(){
     });
   }
 }
+
 </script>
