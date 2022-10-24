@@ -1,5 +1,6 @@
 class EndUser < ApplicationRecord
   has_many :tweets, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -20,7 +21,7 @@ class EndUser < ApplicationRecord
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpg')
     end
-    profile_image.variant(resize_to_limit: [100, 100]).processed
+    profile_image.variant(resize_to_limit: [10, 10]).processed
   end
 
   def active_for_authentication?

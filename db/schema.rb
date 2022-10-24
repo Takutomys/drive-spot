@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_02_140300) do
+ActiveRecord::Schema.define(version: 2022_10_21_094713) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -72,6 +72,13 @@ ActiveRecord::Schema.define(version: 2022_10_02_140300) do
     t.index ["reset_password_token"], name: "index_end_users_on_reset_password_token", unique: true
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.integer "end_user_id"
+    t.integer "tweet_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tweets", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -79,9 +86,8 @@ ActiveRecord::Schema.define(version: 2022_10_02_140300) do
     t.string "name", null: false
     t.text "introduction", null: false
     t.string "address", null: false
-    t.string "image", null: false
     t.float "latitude", null: false
-    t.float "lomgitude", null: false
+    t.float "longitude", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
