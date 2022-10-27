@@ -23,8 +23,9 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
         patch 'end_user/nonrelease' => "end_users#nonrelease"
         resources :end_users, only: [:show, :edit, :update]
         resources :tweets, only: [:show, :edit, :index, :update, :new, :create, :destroy] do
-          resource :favorites, only: [:create, :destroy]
-        end  
+          resources :favorites, only: [:create, :destroy]
+          resources :comments, only: [:create, :destroy]
+        end
   end
 
   devise_scope :end_user do

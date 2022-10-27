@@ -5,11 +5,17 @@ class Public::TweetsController < ApplicationController
 
   def create
     @tweet = current_end_user.tweets.new(tweet_params)
-    @tweet.save
-    redirect_to tweets_path
+    if @tweet.save
+      redirect_to tweets_path
+    else
+      redirect_to new_tweet_path
+    end
   end
 
   def show
+    @tweet = Tweet.find(params[:id])
+    @comment = Comment.new
+    @comments = @tweet.comments.page(params[:page]).per(7).reverse_order
   end
 
   def edit
@@ -36,6 +42,9 @@ class Public::TweetsController < ApplicationController
   end
 
   def destroy
+    @tweet = Tweet.find(params[:id])
+    @tweet.destroy
+    redirect_to tweets_path
   end
 
   private

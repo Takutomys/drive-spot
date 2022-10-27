@@ -9,13 +9,14 @@
   <%= link_to "編集", edit_tweet_path(tweet) %><br>
   <% if tweet.favorited_by?(current_end_user) %>
     <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
-     ♥<%= tweet.favorites.count %> いいね<br>
+     ♥<%= tweet.favorites.count %> いいね
     <% end %>
     <% else %>
      <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
-        ♡<%= tweet.favorites.count %> いいね<br>
+        ♡<%= tweet.favorites.count %> いいね
      <% end %>
   <% end %>
+  <p class="caption"><%= "#{tweet.comments.count} コメント" %></p><br>
   <%= tweet.name %><br>
   <%= tweet.created_at.strftime('%Y/%m/%d') %><br>
   <%= link_to "詳細ページへ", tweet_path(tweet), class: "btn btn-primary" %>
@@ -23,9 +24,9 @@
 <div class="row justify-content-center">
   <%= form_with url: tweets_path, method: :get, local: true do |f| %>
     <P>投稿場所を検索　<%= f.text_field :search %>
-    <%= f.submit '検索する', name: nil %></p
+    <%= f.submit '検索する', name: nil %></p>
   <% end %>
-</div>  
+</div>
 
 <div id='map'>
 </div>
