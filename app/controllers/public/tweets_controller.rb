@@ -20,6 +20,8 @@ class Public::TweetsController < ApplicationController
 
   def edit
     @tweet = Tweet.find(params[:id])
+    gon.tweet_latitude = @tweet.latitude
+    gon.tweet_longitude = @tweet.longitude
   end
 
   def index
