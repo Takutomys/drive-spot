@@ -1,29 +1,66 @@
-<div class="row justify-content-center">
-  <% if end_user_signed_in? && @end_user == current_end_user %>
-    <h3 class="font-weight-normal mt-5 mb-5">マイページ</h3>
-  <% else %>
-    <h1 class="font-weight-normal mt-5 mb-5"><%= @end_user.screen_name %>さんのページ</h1>
-  <% end %>
- </div>
-<div class="row justify-content-center">
-  <% if @end_user.profile_image.attached? %>
-    <%= image_tag @end_user.profile_image %>
-  <% else %>
-    <%= image_tag ("no_image.jpg") %>
-  <% end %>
-  <div class="offset-1">
-    <P>表示状態　<%= @end_user.status_i18n %></P>
-    <%= @end_user.screen_name %><br>
-    <%= @end_user.biography %><br>
-  </div>
+<div class="cover-user-show">
+  <div class="container">
+    <div class="row justify-content-center">
+      <% if end_user_signed_in? && @end_user == current_end_user %>
+      <h1 class="font-weight-normal mt-5 mb-5">マイページ</h1>
+      <% else %>
+      <h1 class="font-weight-normal mt-5 mb-5"><%= @end_user.screen_name %>さんのページ</h1>
+      <% end %>
+    </div>
+    <p class="d-flex justify-content-end">
+      <% if end_user_signed_in? && @end_user == current_end_user %>
+        <%= link_to "プロフィール編集", edit_end_user_path(@end_user), class: "btn-sm btn-success" %>
+      <% end %>
+      <% if current_end_user != @end_user %>
+        <% if current_end_user.following?(@end_user) %>
+          <%= link_to 'フォロー外す', end_user_follows_path(@end_user), method: :delete, class: "btn-sm btn-danger" %>
+        <% else %>
+           <%= link_to 'フォローする', end_user_follows_path(@end_user), method: :POST, class:"btn-sm btn-success" %>
+        <% end %>
+      <% end %>
+    </p>
+    <div class="ml-3 mb-3 card w-100">
+       <div>
+         <p>表示状態 <%= @end_user.status_i18n %></p>
+         <%= @end_user.screen_name %><br>
+         <% if @end_user.profile_image.attached? %>
+           <%= image_tag @end_user.profile_image, class: "rounded-circle", size: "100x100" %><br>
+         <% else %>
+           <%= image_tag "no_image.jpg", class: "rounded-circle", size: "100x100" %><br>
+         <% end %>
+         <%= @end_user.biography %>
+       </div>
+       <div class="d-flex">
+         <%= link_to follows_end_user_path(@end_user) do %>
+           <h6>フォロー<%= @following_end_users.count %></h6>
+         <% end %>&nbsp;&nbsp;
+         <%= link_to followers_end_user_path(@end_user) do %>
+           <h6>フォロワー<%= @follower_end_users.count %></h6>
+         <% end %>
+       </div>
+    </div>
+    <div class=" row justify-content-center">
+      <div class="row justify-content-center">
+        <% @tweets.each do |tweet| %>
+        <div class="tweet">
+            <% if tweet.image.attached? %>
+              <%= image_tag tweet.image, format: 'jpeg', size: '200x133' %><br>
+            <% else %>
+              <%= image_tag ("no_image.jpg"), format: 'jpeg', size: '200x133' %><br>
+            <% end %>
+          <p class="caption mb-0"><%= tweet.name %></p>
+          <p class="caption">
+            <%= "#{tweet.comments.count} コメント" %>
+            <%= "#{tweet.favorites.count} いいね" %>
+          </p>
+        </div>
+        <% end %>
+      </div>
+     <%= paginate @tweets %>
+    </div>
 </div>
-<div class="row justify-content-center">
-  <% if end_user_signed_in? && @end_user == current_end_user %>
-    <%= link_to 'ユーザー編集', edit_end_user_path(current_end_user), class: "btn btn-primary offset-2" %>
-  <% end %>
-</div>
-<div class="row justify-content-center">
-  <%# @tweets.each do |tweet| %>
-  <%# end %>
-</div>
+
+
+
+
 

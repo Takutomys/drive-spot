@@ -1,7 +1,9 @@
 class Public::EndUsersController < ApplicationController
   def show
     @end_user = EndUser.find(current_end_user.id)
-    @tweet = @end_user.tweets.page(params[:page]).reverse_order
+    @tweets = @end_user.tweets.page(params[:page]).reverse_order
+    @following_end_users = @end_user.following_end_user
+    @follower_end_users = @end_user.follower_end_user
   end
 
   def edit
@@ -12,6 +14,16 @@ class Public::EndUsersController < ApplicationController
     @end_user = EndUser.find(params[:id])
     @end_user.update(end_user_params)
     redirect_to end_user_path(current_end_user)
+  end
+  
+  def follows
+    end_user = EndUser.find(params[:id])
+    @end_users = end_user.following_end_user.page(params[:page]).per(3).reverse_order
+  end
+  
+  def followers
+    end_user = EndUser.find(params[:id])
+    @end_users = end_user.follower_end_user.page(params[:page]).per(3).reverse_order
   end
 
   def release

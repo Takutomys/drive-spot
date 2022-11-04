@@ -5,14 +5,14 @@
   <div class="d-flex">  
     <div class="row justify-content-center d-block">
       <p class="caption">ユーザー名 : <%= @tweet.end_user.screen_name %></p> 
-     
       <% if @tweet.image.attached? %>
-        <%= image_tag @tweet.image %>M
+        <%= image_tag @tweet.image %>
       <% else %>
     　  <%= image_tag ("no_image.jpg") %>
-      <% end %> 
+      <% end %>
+      
       <p class="caption"><%= @tweet.name %></p>
-      <h2>おすすめポイント</h2>
+      <h3>おすすめポイント</h3>
       <p><%= @tweet.introduction %></p>
       <%= link_to '編集する', edit_tweet_path(@tweet.id), class: "btn btn-info mr-3" %>
       <%= link_to '削除する', tweet_path(@tweet.id),method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger" %><br>
