@@ -27,6 +27,10 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
           resources :comments, only: [:create, :destroy]
         end    
   end
+  
+  namespace :admin do
+    resources :users, only: [:show, :index, :edit, :update]
+  end   
 
   devise_scope :end_user do
      post 'end_users/guest_sign_in', to: 'public/sessions#guest_sign_in'
