@@ -1,25 +1,26 @@
-<h2>Log in</h2>
+<div class="box1">
+  <div class="box-inner">
+　  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+　  <h1>管理者ログイン</h1>
+　  <div class="box-email">
+      <%= f.label :email, "メールアドレス" %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    <div class="box-password">
+      <%= f.label :password, "パスワード" %><br />
+      <%= f.password_field :password, autocomplete: "current-password" %>
+    </div>
 
   <% if devise_mapping.rememberable? %>
     <div class="field">
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :remember_me, "ログインしたままにする" %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="box-login">
+    <%= f.submit "ログイン" %>
   </div>
 <% end %>
 
