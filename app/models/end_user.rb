@@ -30,6 +30,7 @@ class EndUser < ApplicationRecord
 
   enum gender: { male: 0, female: 1, others: 2 }
   enum status: { nonreleased: 0, released: 1 }
+ 
 
   has_one_attached :profile_image
 
