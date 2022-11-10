@@ -25,12 +25,12 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
         resources :tweets, only: [:show, :edit, :index, :update, :new, :create, :destroy] do
           resources :favorites, only: [:create, :destroy]
           resources :comments, only: [:create, :destroy]
-        end    
+        end
   end
-  
+
   namespace :admin do
-    resources :users, only: [:show, :index, :edit, :update]
-  end   
+    resources :end_users, only: [:show, :index, :edit, :update]
+  end
 
   devise_scope :end_user do
      post 'end_users/guest_sign_in', to: 'public/sessions#guest_sign_in'

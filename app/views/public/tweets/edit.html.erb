@@ -35,21 +35,34 @@
   </style>
   <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
   <script>
-
-  var map;
-  var marker;
-  var infoWindow;
-  const tweet_latitude = gon.first_latitude; 
-  const tweet_longitude = gon.first_longitude;
+  console.log('here');
+  let map;
+  let marker;
+  let infoWindow;
+  const tweet_latitude = gon.tweet_latitude;
+  const tweet_longitude = gon.tweet_longitude;
  
   function initMap(){
-  geocoder = new google.maps.Geocoder()
-  
-    map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: parseFloat(tweet_latitude), lng: parseFloat(tweet_longitude) },
-    zoom: 12
-  });
+    geocoder = new google.maps.Geocoder()
 
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: parseFloat(tweet_latitude), lng: parseFloat(tweet_longitude) },
+      zoom: 12
+    });
+
+    marker = new google.maps.Marker({
+        map: map,
+        position: {lat: parseFloat(tweet_latitude), lng: parseFloat(tweet_longitude) },
+        draggable: true // ドラッグ可能にする
+    });
+
+    // マーカーのドロップ（ドラッグ終了）時のイベント
+    google.maps.event.addListener(marker, 'dragend', function(ev){
+        // イベントの引数evの、プロパティ.latLngが緯度経度
+        document.getElementById('lat').value = ev.latLng.lat();
+        document.getElementById('lng').value = ev.latLng.lng();
+    });
+  }
 
   let geocoder
   let aft
@@ -88,3 +101,4 @@
      }
    });
  }
+ </script>

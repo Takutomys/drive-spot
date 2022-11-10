@@ -4,36 +4,36 @@
   </div>
   <div class="row justify-content-center">
     <%= form_with model: @end_user do |f| %>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :status, "表示状態" %>
       <%= f.radio_button :status, "released" %>
       <%= f.label :status, "公開" %>
       <%= f.radio_button :status, "nonreleased" %>
       <%= f.label :status, "非公開" %>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.file_field :image, accept: "image/*" %>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :screen_name, "ユーザー名" %>
       <%= f.text_field :screen_name %>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :biography, "自己紹介" %>
       <%= f.text_field :biography %>
     </div>
     <div class="row justify-content-center">
       <h4>ユーザー情報編集</h4>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :name, "名前" %>
       <%= f.text_field :name %>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :name_kana, "名前（カナ）" %>
       <%= f.text_field :name_kana %>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :gender, "性別" %>
       <%= f.radio_button :gender, "others" %>
       <%= f.label :gender, "指定なし" %>
@@ -44,11 +44,11 @@
       <%= f.radio_button :gender, "female" %>
       <%= f.label :gender, "女性" %>
     </div>
-    <div class="form_group">
+    <div class="form-group">
       <%= f.label :email, 'メールアドレス' %>
       <%= f.email_field :email %>
     </div>
-    <div class="form_group">
+    <div class="formgroup">
       <%= f.submit "保存する", class: 'btn btn-success' %>
     <% end %>
   </div>
