@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-center">
-    <h1 class="mt-4"><%= @end_user.screen_name %>さんの詳細画面</h1> 
+    <h1 class="mt-4"><%= @end_user.screen_name %>さんの詳細画面</h1>
   </div>
   <div class="row justify-content-center mt-4">
     <table class="table1 table.hover">
@@ -29,9 +29,9 @@
           <th>会員ステータス</th>
           <td>
             <% if @end_user.is_deleted %>
-              <span class="text-success">有効</span>
-       　    <% else %>
               <span class="text-muted">退会</span>
+       　    <% else %>
+       　      <span class="text-success">有効</span>
        　    <% end %>
           </td>
         </tr>
@@ -40,9 +40,8 @@
           <td>
             <%= link_to '編集', edit_admin_end_user_path, class: "btn btn-primary" %>
             <%= link_to '一覧', admin_end_users_path, class: "btn btn-success" %>
-          </td  
+          </td
         </tr>
       </tbody>
     </table>
-  </div>  
-  
+  </div>
