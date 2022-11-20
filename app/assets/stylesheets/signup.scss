@@ -4,17 +4,9 @@
   text-decoration: none;
 }
 
+
 .box1 {
   width: 350px;
-  height: 600px;
-  margin: 60px auto 0;
-  border-radius: 4px;
-  border: 1px #ddd solid;
-}
-
-.box2 {
-  width: 350px;
-  height: 450px;
   margin: 60px auto 0;
   border-radius: 4px;
   border: 1px #ddd solid;
@@ -37,6 +29,7 @@ h1 {
   margin-bottom: 13px;
 }
 
+
 .box-password {
   margin-bottom: 22px;
 }
@@ -57,6 +50,53 @@ h1 {
   box-shadow: 0 1px 0 rgba(0,0,0,.07) inset;
   border-radius: 3px;
   padding: 0 7px;
+}
+
+.box-gender{
+  font-weight: 700;
+  font-size: 13px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+}
+
+.box-name{
+  font-weight: 700;
+  font-size: 13px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+}
+
+.box-name_kana{
+  font-weight: 700;
+  font-size: 13px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+}
+
+.box-screen_name{
+  font-weight: 700;
+  font-size: 13px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+}
+
+
+.box2 {
+  width: 350px;
+  margin: 10px auto 0;
+  border-radius: 4px;
+  border: 1px #ddd solid;
+
+
+
+  .box-inner {
+    .box-gender {
+      .box-gender-input-list {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 }
 
 .column-left {
