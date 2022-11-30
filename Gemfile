@@ -74,3 +74,5 @@ gem "gon"
 gem 'geocoder'
 
 gem 'font-awesome-sass'
+
+gem 'image_processing', '~> 1.2'

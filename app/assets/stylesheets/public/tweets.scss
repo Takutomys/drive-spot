@@ -1,3 +1,12 @@
 // Place all the styles related to the public/tweets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.tweet-comment {
+  height: calc(100vh - 30px);
+  background-image: url('/images/rinmon.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+}
