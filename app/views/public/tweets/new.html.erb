@@ -1,36 +1,48 @@
-<h2>新規投稿</h2>
-<%= form_with model: @tweet, url: tweets_path, method: :post do |f| %>
-  <div class="form_group">
-    <%= f.file_field :image, accept: "image/*" %>
+<div class="row h-100">
+  <div class="tweet col-3">
+    <div class="tweet-form">
+    <h2 class="pt-3">新規投稿</h2>
+    <%= form_with model: @tweet, url: tweets_path, method: :post do |f| %>
+    <div class="form-group pt-2">
+      <%= f.file_field :image, accept: "image/*" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :name, "スポット名" %>
+      <%= f.text_field :name, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :introduction, "おすすめポイント" %>
+      <%= f.text_area :introduction, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :latitude, "経度" %>
+      <%= f.text_field :latitude, id: :lat, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :longitude, "緯度" %><br>
+      <%= f.text_field :longitude, id: :lng, class:"form-control" %>
+    </div>
+    <div>
+      <%= f.submit "投稿する", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
   </div>
-  <div class="form_group">
-    <%= f.label :name, "スポット名" %><br>
-    <%= f.text_field :name %>
   </div>
-  <div class="form_group">
-    <%= f.label :introduction, "おすすめポイント" %><br>
-    <%= f.text_area :introduction %>
-  </div>
-  <div class="form_group">
-    <%= f.label :latitude, "経度" %><br>
-    <%= f.text_field :latitude, id: :lat %><br>
-    <%= f.label :longitude, "緯度" %><br>
-    <%= f.text_field :longitude, id: :lng %>
-  </div>
-  <div>
-    <%= f.submit "投稿する", class: 'btn btn-success' %>
-  </div>
-<% end %>
 
-<input name="tweet[address]" id="address" type="textbox">
-<input type="button" value="検索" onclick="codeAddress()">
-
-<div id='map'>
+  <div class="col-9">
+    <div class="text-center pb-2">
+      <p class="pt-1">投稿する場所を検索</p>
+      <input name="tweet[address]" id="address" type="textbox">
+      <input type="button" value="検索" onclick="codeAddress()">
+    </div>
+    <div id='map'>
+    </div>
+  </div>
 </div>
 
 <style>
 #map{
-  height: 400px;
+  height: 100%;
 }
 </style>
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
@@ -87,7 +99,6 @@ function codeAddress(){
     }
   });
 }
-
 
 </script>
 

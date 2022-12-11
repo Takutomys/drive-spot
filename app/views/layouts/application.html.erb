@@ -14,7 +14,9 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
     <header class="sticky-top">
+      <% if notice %>
       <p class="text-center"><%= notice %></p>
+      <% end %>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

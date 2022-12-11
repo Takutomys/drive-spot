@@ -4,9 +4,64 @@
 
 .tweet-comment {
   height: calc(100vh - 30px);
-  background-image: url('/images/rinmon.jpg');
+  background-image: url('/images/25002422_s.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   width: 100%;
+}
+
+.tweet-form {
+	max-width:200px;
+	width: 100%;
+	margin:0 auto;
+	position:relative;
+}
+
+.tweet {
+  background:#00CC00;
+
+}
+
+.favorite_btn {
+  text-decoration: none;
+  color: black;
+}
+
+.profile {
+  margin-left: -90px;
+}
+
+.screen_name {
+  margin-left: -150px;
+  margin-top: 30px;
+}
+
+.img {
+  margin-top: 0px;
+  padding: 10px;
+  .no_image{
+    width: 100%;
+    margin: 0 6px;
+  }
+}
+
+.thoughts {
+  margin-left: 6px;
+}
+
+.title {
+  margin-left: 8px;
+}
+
+.date {
+  margin-left: 8px;
+}
+
+.tweet-btn {
+  margin-left: 8px;
+}
+
+.map {
+  padding: 0;
 }
