@@ -18,7 +18,7 @@ class EndUser < ApplicationRecord
     follower.find_by(followed_id: end_user_id).destroy
   end
   
-   def following?(user)
+   def following?(end_user)
     following_end_user.include?(end_user)
    end
 

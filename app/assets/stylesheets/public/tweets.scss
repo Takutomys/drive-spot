@@ -1,3 +1,77 @@
 // Place all the styles related to the public/tweets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.tweet-comment {
+  .link {
+    text-decoration: none;
+    color: black;
+  }
+  height: calc(100vh - 30px);
+  background-image: url('/images/25002422_s.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+}
+
+.tweet-form {
+	max-width:200px;
+	width: 100%;
+	margin:0 auto;
+	position:relative;
+}
+
+.tweet {
+  background:#00CC00;
+}
+
+.tweet_img {
+  margin-top: 0px;
+  padding: 10px;
+    .no_image{
+      width: 100%;
+      margin: 0 6px;
+    }
+}
+
+.tweet_thoughts {
+  margin-left: 6px;
+}
+
+.tweet_title {
+  margin-left: 8px;
+}
+
+.tweet_date {
+  margin-left: 8px;
+}
+
+.tweet-btn {
+  margin-left: 8px;
+}
+
+.favorite_btn {
+  text-decoration: none;
+  color: black;
+}
+
+.profile {
+  margin-left: -80px;
+}
+
+.screen_name {
+  margin-left: -150px;
+  margin-top: 30px;
+}
+
+.map {
+  padding: 0;
+}
+
+.file-upload-field {
+  padding: 10px 40px;
+  color: #ffffff;
+  background-color: #384878;
+  cursor: pointer;
+}

@@ -1,46 +1,42 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <h1 class="font-weight-normal mt-3">ドライブスポット投稿詳細</h1>
-  </div>
-  <div class="d-flex">  
-    <div class="row justify-content-center d-block">
-      <p class="caption">ユーザー名 : <%= @tweet.end_user.screen_name %></p> 
-      <% if @tweet.image.attached? %>
-        <%= image_tag @tweet.image %>
-      <% else %>
-    　  <%= image_tag ("no_image.jpg") %>
-      <% end %>
-      
-      <p class="caption"><%= @tweet.name %></p>
-      <h3>おすすめポイント</h3>
-      <p><%= @tweet.introduction %></p>
-      <%= link_to '編集する', edit_tweet_path(@tweet.id), class: "btn btn-info mr-3" %>
-      <%= link_to '削除する', tweet_path(@tweet.id),method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger" %><br>
-      <%= link_to '投稿一覧ページへ', tweets_path, class: "btn btn-dark mt-3" %>
+<div class="tweet-comment">
+  <div class="container">
+    <div class="row justify-content-center">
+      <h1 class="font-weight-normal mt-3">ドライブスポット投稿詳細</h1>
     </div>
-    
-    <div class="comments offset-2 mt-5">
-      <%= form_with(model:[@tweet, @comment], local: true) do |f| %>
-        <%= f.text_area :comment, :size=>"60x3",placeholder: "コメントする" %>
-        <%= f.submit "送信する", class: "btn btn-success mb-4" %>
-      <% end %>
-      
-      <p>コメント件数：<%= @comments.count %></p>
-        <% @comments.each do |comment| %>
-        <div class="comments-index mb-2">
-          <%= comment.end_user.name %>
-          <%= comment.created_at.strftime('%Y/%m/%d') %><br>
-          <div class="d-flex">
-            <%= comment.comment %>
-            <% if comment.end_user == current_end_user %>
-            <div class="comment-delete">
-              <%= link_to "削除", tweet_comment_path(comment.tweet, comment), method: :delete, class: "btn-sm btn-danger" %>
+    <div class="d-flex">
+      <div class="row justify-content-center d-block">
+        <p class="caption">ユーザー名 : <%= link_to @tweet.end_user.screen_name, end_user_path, class: "link" %></p>
+        <%= image_tag @tweet.get_image %>
+        <h5 class="caption"><%= @tweet.name %></h5>
+        <h3 style="text-decoration:underline; text-decoration-color:#FFA500;">おすすめポイント</h3>
+        <p><%= @tweet.introduction %></p>
+        <%= link_to '編集する', edit_tweet_path(@tweet.id), class: "btn btn-info mr-3" %>
+        <%= link_to '削除する', tweet_path(@tweet.id),method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger" %><br>
+        <%= link_to '投稿一覧ページへ', tweets_path, class: "btn btn-dark mt-3" %>
+      </div>
+
+      <div class="comments offset-2 mt-5">
+        <%= form_with(model:[@tweet, @comment], local: true) do |f| %>
+          <%= f.text_area :comment, :size=>"60x3",placeholder: "コメントする" %>
+          <%= f.submit "送信する", class: "btn btn-success mb-4" %>
+        <% end %>
+
+        <p>コメント件数：<%= @comments.count %></p>
+          <% @comments.each do |comment| %>
+          <div class="comments-index mb-2">
+            <%= comment.end_user.screen_name %>
+            <%= comment.created_at.strftime('%Y/%m/%d') %><br>
+            <div class="d-flex">
+              <%= comment.comment %>
+              <% if comment.end_user == current_end_user %>
+              <div class="comment-delete">
+                <%= link_to "削除", tweet_comment_path(comment.tweet, comment), method: :delete, class: "btn-sm btn-danger" %>
+              </div>
             </div>
           </div>
-        </div> 
-        <% end %>
-        <% end %>
+          <% end %>
+          <% end %>
         <%= paginate @comments %>
     </div>
   </div>
-</div>  
+</div>

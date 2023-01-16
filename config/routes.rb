@@ -12,7 +12,6 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 
   scope module: :public do
         root to: "homes#top"
-        get 'end_user/unsubscribe' => "end_users#unsubscribe"
         patch 'end_user/withdraw' => "end_users#withdraw"
         patch 'end_user/release' => "end_users#release"
         patch 'end_user/nonrelease' => "end_users#nonrelease"
@@ -23,7 +22,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
            resource :follows, only: [:create, :destroy]
         end
         resources :tweets, only: [:show, :edit, :index, :update, :new, :create, :destroy] do
-          resources :favorites, only: [:create, :destroy]
+          resource :favorites, only: [:create, :destroy]
           resources :comments, only: [:create, :destroy]
         end
   end

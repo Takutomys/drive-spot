@@ -1,38 +1,71 @@
-<h2>新着投稿</h2>
-<% @tweets.each do |tweet| %>
-　<%= tweet.end_user.screen_name %><br>
-  <% if tweet.image.attached? %>
-    <%= image_tag tweet.image %>M<br>
-  <% else %>
-    <%= image_tag ("no_image.jpg") %><br>
-  <% end %>
-  <%= link_to "編集", edit_tweet_path(tweet) %><br>
-  <% if tweet.favorited_by?(current_end_user) %>
-    <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
-     ♥<%= tweet.favorites.count %> いいね
+<div class="row">
+  <div class="tweet col-3">
+    <div class="row justify-content-center">
+　    <h2 class="pt-3">新着投稿</h2>
+　  </div>
+　　<% @tweets.each do |tweet| %>
+　　<div class="d-flex justify-content-start">
+　　  <div class="profile">
+　　　  <%= image_tag tweet.end_user.profile_image, size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+　　　</div>
+　　　<div class="screen_name">
+　　　  ユーザー名: <%= tweet.end_user.screen_name %>
+　　　</div>
+　  </div>
+　  <div class="tweet_img">
+      <%= image_tag tweet.get_image %>
+    </div>
+    <div class="d-flex tweet_thoughts">
+      <div>
+        <% if tweet.favorited_by?(current_end_user) %>
+          <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
+            <i class="fa-solid fa-heart fa-fw faa-wrench animated-hover" style="color: #ff6347;"></i><%= tweet.favorites.count %> いいね
+          <% end %>
+        <% else %>
+          <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
+            <i class="far fa-heart" style="color: #ff6347;"></i><%= tweet.favorites.count %> いいね
+          <% end %>
+        <% end %>
+      </div>
+      <div class="offset-1">
+        <i class="fa-solid fa-comment" style="color: #FFFFFF;"></i>
+        <%= "コメント #{tweet.comments.count}" %>
+      </div>
+    </div>
+    <div class="tweet_title font-weight-bold">
+      <%= tweet.name %>
+    </div>
+    <div class="tweet_date">
+      <%= tweet.created_at.strftime('%Y/%m/%d') %>
+    </div>
+    <div class="tweet-btn">
+      <%= link_to "編集", edit_tweet_path(tweet), class: "btn btn-secondary" %>
+      <%= link_to "詳細ページへ", tweet_path(tweet), class: "btn btn-primary" %>
+    </div>
     <% end %>
+  </div>
+
+  <% if @tweets.present? %>
+  <div class="col-9 map" style="padding: 0">
+    <div class="row justify-content-center pt-2">
+      <%= form_with url: tweets_path, method: :get, local: true do |f| %>
+        <P>投稿場所を検索　<%= f.text_field :search %>
+        <%= f.submit '検索する', name: nil %></p>
+      <% end %>
+    </div>
+    <div id='map'>
+    </div>
     <% else %>
-     <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
-        ♡<%= tweet.favorites.count %> いいね
-     <% end %>
-  <% end %>
-  <p class="caption"><%= "#{tweet.comments.count} コメント" %></p><br>
-  <%= tweet.name %><br>
-  <%= tweet.created_at.strftime('%Y/%m/%d') %><br>
-  <%= link_to "詳細ページへ", tweet_path(tweet), class: "btn btn-primary" %>
-<% end %>
-<div class="row justify-content-center">
-  <%= form_with url: tweets_path, method: :get, local: true do |f| %>
-    <P>投稿場所を検索　<%= f.text_field :search %>
-    <%= f.submit '検索する', name: nil %></p>
-  <% end %>
+      <div class="offset-2 mt-5">
+        <h1>投稿がありません</h1>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<div id='map'>
-</div>
 <style>
   #map{
-    height: 400px;
+   height: 95.75%;
   }
 </style>
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
@@ -47,7 +80,7 @@ const first_longitude = gon.first_longitude; // コントローラーで定義�
 
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: parseFloat(first_latitude), lng: parseFloat(first_longitude) },
+    center: {lat: parseFloat(first_latitude), lng: parseFloat(first_longitude)},
     zoom: 12
   });
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= favicon_link_tag('favicon.ico') %>
     <title>Drive_spot</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -12,24 +13,81 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <div class="container">
-    <header class="row">
-      <%= notice %>
-      <% if end_user_signed_in? %>
-        <div><%= link_to "トップ", root_path %></div>
-        <div class=pl-2><%= link_to "マイページ", end_user_path(current_end_user) %></div>
-        <div class=pl-2><%= link_to "投稿する", new_tweet_path %></div>
-        <div class=pl-2><%= link_to "投稿一覧", tweets_path %></div>
-        <div class=pl-2><%= link_to "ログアウト", destroy_end_user_session_path, method: :delete %></div>
-        <div class=pl-2><%= link_to "退会する", end_user_unsubscribe_path %></div>
-      <% elsif admin_signed_in? %>
-        <li>
-          <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
-        </li>
-      <% end %>  
+    <header class="sticky-top">
+      <% if notice %>
+      <p class="text-center"><%= notice %></p>
+      <% end %>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          <%= image_tag 'drive.png', style:"width: 50px"%>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <% if end_user_signed_in? %>
+              <li class="nav-item">
+                <div style="text-align: center;">
+                  <%= link_to root_path, class: "navbar-item" do %>
+                    <i class="fas fa-home"></i>
+                    <p style="font-size:5px;">トップ</p>
+                  <% end %>  
+                </div>
+              </li>
+              <li class="nav-item">
+                <div style="text-align: center;">
+                  <%= link_to end_user_path(current_end_user), class: "navbar-item" do %>
+                    <i class="fas fa-user-alt"></i>
+                    <p style="font-size:5px;">マイページ</p>
+                  <% end %>  
+                </div>
+              </li>
+              <li class="nav-item">
+                <div style="text-align: center;">
+                  <%= link_to new_tweet_path, class: "navbar-item" do %>
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p style="font-size:5px;">投稿</p>
+                  <% end %>  
+                </div>
+              </li>
+              <li class="nav-item">
+                <div style="text-align: center;">
+                  <%= link_to tweets_path, class: "navbar-item" do %>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p style="font-size:5px;">投稿一覧</p>
+                  <% end %>  
+                </div>
+              </li>
+              <li class="nav-item">
+                <div style="text-align: center;">
+                  <%= link_to destroy_end_user_session_path, method: :delete, class: "navbar-item" do %>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p style="font-size:5px;">ログアウト</p>
+                  <% end %>
+                </div>  
+              </li>
+              <% elsif admin_signed_in? %>
+                <li class="nav-item">
+                  <div style="text-align: center;">
+                    <%= link_to admin_end_users_path, class: "navbar-item" do %>
+                      <i class="far fa-user"></i>
+                      <p style="font-size:5px;">ユーザー一覧</p>
+                    <% end %>  
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div style="text-align: center;">
+                    <%= link_to destroy_admin_session_path, method: :delete, class: "navbar-item" do %>
+                      <i class="fas fa-sign-out-alt"></i>
+                      <p style="font-size:5px;">ログアウト</p>
+                    <% end %>
+                  </div>
+                </li>  
+            <% end %>
+          </ul>
+        </div>
+      </nav>
     </header>
-  </div>
-  <body>
-    <%= yield %>
-  </body>
+   <body>
+     <%= yield %>
+   </body>
 </html>

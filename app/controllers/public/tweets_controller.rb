@@ -1,6 +1,6 @@
 class Public::TweetsController < ApplicationController
   def new
-    @tweet = Tweet.new
+    @tweet = Tweet.new(name: nil, introduction: nil)
   end
 
   def create
@@ -8,7 +8,7 @@ class Public::TweetsController < ApplicationController
     if @tweet.save
       redirect_to tweets_path
     else
-      redirect_to new_tweet_path
+      render :new
     end
   end
 
@@ -34,11 +34,11 @@ class Public::TweetsController < ApplicationController
     else
       @tweets = Tweet.order(created_at: :desc).limit(4)
     end
-
     gon.tweets = Tweet.eager_load(:end_user)
-    gon.first_latitude = @tweets.first.latitude
-    gon.first_longitude = @tweets.first.longitude
-
+    if @tweets.present?
+      gon.first_latitude = @tweets.first.latitude
+      gon.first_longitude = @tweets.first.longitude
+    end
   end
 
   def update
@@ -56,6 +56,6 @@ class Public::TweetsController < ApplicationController
   private
 
   def tweet_params
-     params.require(:tweet).permit(:end_user_id, :name, :introduction, :latitude, :longitude, :address)
+     params.require(:tweet).permit(:end_user_id, :name, :introduction, :latitude, :longitude, :address, :image)
   end
 end
