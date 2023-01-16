@@ -4,7 +4,7 @@ class Public::SessionsController < Devise::SessionsController
   def guest_sign_in
     end_user = EndUser.guest
     sign_in end_user
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+    redirect_to tweets_path, notice: 'ゲストユーザーとしてログインしました。'
   end
 
   def after_sign_in_path_for(resource)
@@ -17,6 +17,18 @@ class Public::SessionsController < Devise::SessionsController
   end
 
   before_action :end_user_state, only: [:create]
+
+  def  reject_user
+    @end_user = EndUser.find_by(name: params[:end_user][:name])
+    if @end_user
+      if @end_user.valid_password?(parms[:end_user][:password]) && (@end_user.is_deleted == false)
+        flash[:error] = "退会処理済みです。再度ご登録をしてご利用ください"
+        redirect_to new_end_user_registration_path
+      else
+        flash[:error] = "項目を入力してください"
+      end
+    end
+  end
 
   # GET /resource/sign_in
   # def new
@@ -45,17 +57,4 @@ class Public::SessionsController < Devise::SessionsController
       end
     end
   end
-
-  def  reject_user
-    @end_user = EndUser.find_by(name: params[:end_user][:name])
-    if @end_user
-      if @end_user.valid_password?(parms[:end_user][:password]) && (@end_user.is_deleted == false)
-        flash[:error] = "退会処理済みです。再度ご登録をしてご利用ください"
-        redirect_to new_end_user_registration_path
-      else
-        flash[:error] = "項目を入力してください"
-      end
-    end
-  end
-
 end

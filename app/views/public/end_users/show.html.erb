@@ -8,6 +8,15 @@
           <%= image_tag "no_image.jpg", size: "200x200",class:"rounded-circle mx-auto" %>
         <% end %>
       </div>
+    　<div class="mb-4 offset-2">
+        <% if current_end_user != @enduser %>
+          <% if current_end_user.following?(@end_user) %>
+            <%= link_to 'フォロー外す', end_user_follows_path(@end_user), method: :delete, class: "btn-sm btn-danger" %>
+          <% else %>
+            <%= link_to 'フォローする', end_user_follows_path(@end_user), method: :POST, class:"btn-sm btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
       <table class="table mx-auto">
         <tbody>
           <tr>
@@ -40,18 +49,11 @@
           </tr>
         </tbody>
       </table>
-      <% if @end_user.id != current_end_user.id %>
-        <% if current_end_user.following?(@end_user) %>
-        <%= link_to 'フォロー外す', end_user_follows_path(@end_user), method: :delete, class: "btn-sm btn-danger" %>
-        <% else %>
-           <%= link_to 'フォローする', end_user_follows_path(@end_user), method: :POST, class:"btn-sm btn-success" %>
-        <% end %>
-      <% end %>
       <div class="text-center">
-       <% if end_user_signed_in? && @end_user.id == current_end_user.id %>
-        <%= link_to "編集する",  edit_end_user_path(@end_user), class:"btn btn-outline-success" %>
-       <% end %>
-        <%= link_to "退会", end_user_withdraw_path, method: :patch, "data-confirm" => "本当に退会しますか？", class: "btn btn-outline-danger" %>
+        <% if end_user_signed_in? && @end_user.id == current_end_user.id %>
+          <%= link_to "編集する",  edit_end_user_path(@end_user), class:"btn btn-outline-success" %>
+        <% end %>
+          <%= link_to "退会", end_user_withdraw_path, method: :patch, "data-confirm" => "本当に退会しますか？", class: "btn btn-outline-danger" %>
       </div>
     </div>
     <div class="col-lg-8 mt-4">

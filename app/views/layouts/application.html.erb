@@ -67,12 +67,21 @@
               </li>
               <% elsif admin_signed_in? %>
                 <li class="nav-item">
-                <div style="text-align: center;">
-                  <%= link_to destroy_admin_session_path, method: :delete, class: "navbar-item" do %>
-                    <i class="fas fa-sign-out-alt"></i>
-                    <p style="font-size:5px;">ログアウト</p>
-                  <% end %>
-                </div>  
+                  <div style="text-align: center;">
+                    <%= link_to admin_end_users_path, class: "navbar-item" do %>
+                      <i class="far fa-user"></i>
+                      <p style="font-size:5px;">ユーザー一覧</p>
+                    <% end %>  
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div style="text-align: center;">
+                    <%= link_to destroy_admin_session_path, method: :delete, class: "navbar-item" do %>
+                      <i class="fas fa-sign-out-alt"></i>
+                      <p style="font-size:5px;">ログアウト</p>
+                    <% end %>
+                  </div>
+                </li>  
             <% end %>
           </ul>
         </div>
