@@ -6,7 +6,11 @@
 　　<% @tweets.each do |tweet| %>
 　　<div class="d-flex justify-content-start">
 　　  <div class="profile">
-　　　  <%= image_tag tweet.end_user.profile_image, size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+　　    <% if tweet.end_user.profile_image.present?  %>
+　　　    <%= image_tag tweet.end_user.profile_image, size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+　　　  <% else %>
+　　　    <%= image_tag "no_image.jpg", size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+　　　  <% end %>
 　　　</div>
 　　　<div class="screen_name">
 　　　  ユーザー名: <%= tweet.end_user.screen_name %>

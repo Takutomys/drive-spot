@@ -26,15 +26,15 @@ class Public::TweetsController < ApplicationController
 
   def index
     if params[:search].present?
-      @tweets = Tweet.where('address LIKE ?', "%#{params[:search]}%")
+      @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).where('address LIKE ?', "%#{params[:search]}%")
 
       if @tweets.empty?
-        @tweets = Tweet.order(created_at: :desc).limit(4)
+        @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
       end
     else
-      @tweets = Tweet.order(created_at: :desc).limit(4)
+      @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
     end
-    gon.tweets = Tweet.eager_load(:end_user)
+    gon.tweets = Tweet.includes(:end_user).where(end_users: {status: "released"})
     if @tweets.present?
       gon.first_latitude = @tweets.first.latitude
       gon.first_longitude = @tweets.first.longitude

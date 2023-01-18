@@ -1,7 +1,14 @@
 class Public::EndUsersController < ApplicationController
+  before_action :not_guest_user!, only: [:edit, :update]
+
   def show
-    @end_user = EndUser.find(current_end_user.id)
-    @tweets = @end_user.tweets.page(params[:page]).reverse_order
+    @end_user = EndUser.find(params[:id])
+    if @end_user == current_end_user
+       @tweets = @end_user.tweets.page(params[:page]).reverse_order
+    else
+      @tweets = @end_user.tweets.includes(:end_user).where(end_users: {status: "released"}).page(params[:page]).reverse_order
+      
+    end
     @following_end_users = @end_user.following_end_user
     @follower_end_users = @end_user.follower_end_user
   end
@@ -33,14 +40,14 @@ class Public::EndUsersController < ApplicationController
 
   def release
     @end_user = EndUser.find(params[:id])
-    @end_user.released! unmless @end_user.released?
-    ridirect_to edit_end_user_path(current_end_user), notice: 'このアカウントを公開しました'
+    @end_user.released! unless @end_user.released?
+    ridirect_to edit_end_user_path(@end_user), notice: 'このアカウントを公開しました'
   end
 
   def nonrelease
     @end_user = EndUser.find(params[:id])
     @end_user.nonreleased! unless @end_user.nonreleased?
-    ridirect_to edit_end_user_path(current_end_user), notice: 'このアカウントを非公開にしました'
+    ridirect_to edit_end_user_path(@end_user), notice: 'このアカウントを非公開にしました'
   end
 
   def withdraw
@@ -57,4 +64,9 @@ class Public::EndUsersController < ApplicationController
     params.require(:end_user).permit(:name, :name_kana, :screen_name, :biography, :gender, :is_deleted, :status, :profile_image, :password, :email, :password_confirmation)
   end
 
+  def not_guest_user!
+    if EndUser.find(params[:id]).guest?
+      redirect_to root_path
+    end
+  end
 end
