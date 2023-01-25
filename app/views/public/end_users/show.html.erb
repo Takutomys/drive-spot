@@ -9,7 +9,7 @@
         <% end %>
       </div>
     　<div class="mb-4 offset-2">
-        <% if current_end_user != @enduser %>
+        <% if current_end_user != @end_user %>
           <% if current_end_user.following?(@end_user) %>
             <%= link_to 'フォロー外す', end_user_follows_path(@end_user), method: :delete, class: "btn-sm btn-danger" %>
           <% else %>
@@ -71,7 +71,7 @@
           </div>
           <% end %>
           <%= tweet.created_at.strftime('%Y/%m/%d') %><br>
-          <%= tweet.name %><br>
+          <%= tweet.spot_name %><br>
           <i class="fa-solid fa-heart fa-fw faa-wrench animated-hover" style="color: #ff6347;"></i> <%= tweet.favorites.count %>
         </div>
         <% end %>

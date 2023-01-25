@@ -9,17 +9,21 @@
         <p class="caption">ユーザー名 : <%= @tweet.end_user.screen_name %></p>
         <%= image_tag @tweet.get_image %>
         <% end %>
-        <h5 class="caption"><%= @tweet.name %></h5>
-        <h3 style="text-decoration:underline; text-decoration-color:#FFA500;">おすすめポイント</h3>
+        <h5 class="caption">
+          <%= @tweet.prefectures %>
+          <%= @tweet.spot_name %>
+        </h5>
+        <h4 style="text-decoration:underline; text-decoration-color:#FFA500;">おすすめポイント</h3>
         <p><%= @tweet.introduction %></p>
         <% if @tweet.end_user == current_end_user %>
           <%= link_to '編集する', edit_tweet_path(@tweet.id), class: "btn btn-info mr-3" %>
           <%= link_to '削除する', tweet_path(@tweet.id),method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger" %><br>
-        <% end %>  
+        <% end %>
         <%= link_to '投稿一覧ページへ', tweets_path, class: "btn btn-dark mt-3" %>
       </div>
 
-      <div class="comments offset-2 mt-5">
+      <div class="comments offset-2 mt-4">
+      <div id='map'></div>
         <%= form_with(model:[@tweet, @comment], local: true) do |f| %>
           <%= f.text_area :comment, :size=>"60x3",placeholder: "コメントする" %>
           <%= f.submit "送信する", class: "btn btn-success mb-4" %>
@@ -44,3 +48,51 @@
     </div>
   </div>
 </div>
+
+
+<style>
+  #map{
+    width: 81%;
+    height: 300px;
+    margin-bottom: 5px;
+  }
+</style>
+<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
+<script>
+let map;
+let marker = null; // マーカーを複数表示させたいので、配列化
+let infoWindow = null; // 吹き出しを複数表示させたいので、配列化
+const tweets = gon.tweets; // コントローラーで定義したインスタンス変数を変数に代入
+const tweet_latitude = gon.latitude; // コントローラーで定義したインスタンス変数を変数に代入
+const tweet_longitude = gon.longitude; // コントローラーで定義したインスタンス変数を変数に代入
+
+
+function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: parseFloat(tweet_latitude), lng: parseFloat(tweet_longitude)},
+    zoom: 10
+  });
+
+  // forは繰り返し処理
+  // 変数iを0と定義し、
+  // その後gonで定義したusers分繰り返し加える処理を行う
+
+    marker = new google.maps.Marker({
+        map: map,
+        position: {lat: tweet_latitude, lng: tweet_longitude }
+    });
+
+    // infoWindowは吹き出し
+    infoWindow = new google.maps.InfoWindow({
+    // contentで中身を指定
+    // 今回は文字にリンクを貼り付けた形で表示
+      content: `${gon.tweet_name}`
+    });
+    // markerがクリックされた時、
+    marker.addListener("click", function(){
+        // infoWindowを表示
+        infoWindow.open(map, marker);
+    });
+}
+
+</script>

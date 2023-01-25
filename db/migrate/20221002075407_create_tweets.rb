@@ -4,7 +4,8 @@ class CreateTweets < ActiveRecord::Migration[6.1]
 
       t.timestamps
       t.integer :end_user_id, null: false
-      t.string :name, null: false
+      t.string :prefectures, null:false
+      t.string :spot_name, null: false
       t.text :introduction, null: false
       t.string :address
       t.float :latitude, null: false

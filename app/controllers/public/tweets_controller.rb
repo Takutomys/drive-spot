@@ -1,6 +1,7 @@
 class Public::TweetsController < ApplicationController
+  before_action :ensure_user, only: [:edit, :update, :destroy]
   def new
-    @tweet = Tweet.new(name: nil, introduction: nil)
+    @tweet = Tweet.new(spot_name: nil, introduction: nil)
   end
 
   def create
@@ -16,6 +17,11 @@ class Public::TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
     @comment = Comment.new
     @comments = @tweet.comments.page(params[:page]).per(7).reverse_order
+    @lat = @tweet.latitude
+    @lng = @tweet.longitude
+    gon.latitude = @lat
+    gon.longitude = @lng
+    gon.tweet_name = @tweet.spot_name
   end
 
   def edit
@@ -26,15 +32,16 @@ class Public::TweetsController < ApplicationController
 
   def index
     if params[:search].present?
-      @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).where('address LIKE ?', "%#{params[:search]}%")
-
+      @spot_tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).where('spot_name LIKE ?', "%#{params[:search]}%")
+      @name_tweets = Tweet.includes(:end_user).where(end_users: {status: "released",screen_name:params[:search]})
+      @tweets = @spot_tweets << @name_tweets
       if @tweets.empty?
-        @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
+        #@tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
       end
     else
       @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
     end
-    gon.tweets = Tweet.includes(:end_user).where(end_users: {status: "released"})
+    gon.tweets = @tweets
     if @tweets.present?
       gon.first_latitude = @tweets.first.latitude
       gon.first_longitude = @tweets.first.longitude
@@ -56,6 +63,12 @@ class Public::TweetsController < ApplicationController
   private
 
   def tweet_params
-     params.require(:tweet).permit(:end_user_id, :name, :introduction, :latitude, :longitude, :address, :image)
+     params.require(:tweet).permit(:end_user_id, :spot_name, :introduction, :latitude, :longitude, :address, :image, :prefectures)
+  end
+
+  def ensure_user
+    @tweets = current_end_user.tweets
+    @tweet = @tweets.find_by(id: params[:id])
+    redirect_to  new_tweet_path unless @tweet
   end
 end

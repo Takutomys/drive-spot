@@ -7,7 +7,7 @@
     text-decoration: none;
     color: black;
   }
-  height: calc(100vh - 30px);
+  
   background-image: url('/images/25002422_s.jpg');
   background-repeat: no-repeat;
   background-position: center;
@@ -36,6 +36,10 @@
 }
 
 .tweet_thoughts {
+  margin-left: 6px;
+}
+
+.tweet_prefectures {
   margin-left: 6px;
 }
 

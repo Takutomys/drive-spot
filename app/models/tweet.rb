@@ -4,8 +4,9 @@ class Tweet < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one_attached :image
 
-  validates :name, presence: true
+  validates :spot_name, presence: true
   validates :introduction, presence: true
+  validates :prefectures, presence: true
 
   geocoded_by :address
   after_validation :geocode
@@ -21,4 +22,5 @@ class Tweet < ApplicationRecord
   def favorited_by?(end_user)
     favorites.where(end_user_id: end_user.id).exists?
   end
+
 end
