@@ -9,12 +9,14 @@
         <p class="caption">ユーザー名 : <%= @tweet.end_user.screen_name %></p>
         <%= image_tag @tweet.get_image %>
         <% end %>
-        <h5 class="caption">
-          <%= @tweet.prefectures %>
-          <%= @tweet.spot_name %>
-        </h5>
-        <h4 style="text-decoration:underline; text-decoration-color:#FFA500;">おすすめポイント</h3>
-        <p><%= @tweet.introduction %></p>
+        <div class="tweet_information mt-2">
+          <h5 class="caption">
+            <%= @tweet.prefectures %>
+            <%= @tweet.spot_name %>
+          </h5>
+          <h5 style="text-decoration:underline; text-decoration-color:#FFA500;">おすすめポイント</h5>
+          <p><%= @tweet.introduction %></p>
+        </div>
         <% if @tweet.end_user == current_end_user %>
           <%= link_to '編集する', edit_tweet_path(@tweet.id), class: "btn btn-info mr-3" %>
           <%= link_to '削除する', tweet_path(@tweet.id),method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger" %><br>

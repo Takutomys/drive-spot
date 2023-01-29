@@ -7,12 +7,13 @@
     text-decoration: none;
     color: black;
   }
-  
+
   background-image: url('/images/25002422_s.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   width: 100%;
+  min-height: 100%;
 }
 
 .tweet-form {
@@ -78,4 +79,9 @@
   color: #ffffff;
   background-color: #384878;
   cursor: pointer;
+}
+
+.tweet_information {
+  background-color: #E6FFE9;
+  width: 350px;
 }

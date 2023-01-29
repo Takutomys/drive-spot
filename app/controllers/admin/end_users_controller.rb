@@ -1,4 +1,5 @@
 class Admin::EndUsersController < ApplicationController
+  skip_before_action :authenticate_end_user!
   def index
     @end_users = EndUser.page(params[:page]).per(10)
   end

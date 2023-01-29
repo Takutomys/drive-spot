@@ -1,5 +1,6 @@
 class Public::TweetsController < ApplicationController
   before_action :ensure_user, only: [:edit, :update, :destroy]
+
   def new
     @tweet = Tweet.new(spot_name: nil, introduction: nil)
   end
@@ -33,10 +34,11 @@ class Public::TweetsController < ApplicationController
   def index
     if params[:search].present?
       @spot_tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).where('spot_name LIKE ?', "%#{params[:search]}%")
-      @name_tweets = Tweet.includes(:end_user).where(end_users: {status: "released",screen_name:params[:search]})
-      @tweets = @spot_tweets << @name_tweets
+      @name_tweets = Tweet.includes(:end_user).where(end_users: {status: "released", screen_name: params[:search]})
+      @tweets = @spot_tweets.to_a.push(@name_tweets.to_a)
+      @tweets = @tweets.flatten!
       if @tweets.empty?
-        #@tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
+        @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)
       end
     else
       @tweets = Tweet.includes(:end_user).where(end_users: {status: "released"}).order(created_at: :desc).limit(4)

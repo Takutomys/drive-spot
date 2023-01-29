@@ -10,7 +10,7 @@ class Public::SessionsController < Devise::SessionsController
   def after_sign_in_path_for(resource)
     if current_end_user
         flash[:notice] = "ログインに成功しました"
-       end_user_path(current_end_user)
+      end_user_path(current_end_user)
     else
       root_path
     end

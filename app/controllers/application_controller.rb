@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_end_user!,except: [:top]
+  before_action :authenticate_end_user!, except: [:top]
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def check_guest
