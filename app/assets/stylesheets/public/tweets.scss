@@ -3,16 +3,17 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .tweet-comment {
-  .link {
+  .caption {
     text-decoration: none;
     color: black;
   }
-  height: calc(100vh - 30px);
+
   background-image: url('/images/25002422_s.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   width: 100%;
+  min-height: 100%;
 }
 
 .tweet-form {
@@ -39,6 +40,10 @@
   margin-left: 6px;
 }
 
+.tweet_prefectures {
+  margin-left: 6px;
+}
+
 .tweet_title {
   margin-left: 8px;
 }
@@ -57,11 +62,11 @@
 }
 
 .profile {
-  margin-left: -80px;
+  margin-left: -110px;
 }
 
 .screen_name {
-  margin-left: -150px;
+  margin-left: -190px;
   margin-top: 30px;
 }
 
@@ -74,4 +79,9 @@
   color: #ffffff;
   background-color: #384878;
   cursor: pointer;
+}
+
+.tweet_information {
+  background-color: #E6FFE9;
+  width: 350px;
 }

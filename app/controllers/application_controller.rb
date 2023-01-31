@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate_end_user!, except: [:top]
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   def check_guest
    email = resource&.email || params[:user][:email].downcase
    if email == 'guest@example.com'
@@ -9,8 +12,6 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     root_path
   end
-
-  before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
 

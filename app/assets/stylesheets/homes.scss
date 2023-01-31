@@ -1,5 +1,5 @@
 .top-page {
-  height: calc(100vh - 30px);
+  height: calc(100vh-30px);
   background-image: url('/images/TS0529015_TP_V4.jpg');
   background-repeat: no-repeat;
   background-position: center;
@@ -7,29 +7,57 @@
   width: 100%;
 }
 
-.title {
-  font-family: 'Great Vibes', cursive;
+.top-page::before {
+  background: inherit;
+  content: '';
+  filter: blur(1px);
+  position: absolute;
+  top:0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.sub-title {
-  font-family: serif;
+.title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 60px;
+  color: #1c1c1c;
+  text-shadow:
+        1px 1px #cccccc, /*文字の右下に影を追加*/
+        1px -1px #cccccc,/*文字の右上に影を追加*/
+        -1px 1px #cccccc,/*文字の左下に影を追加*/
+        -1px -1px #cccccc;/*文字の左上に影を追加*/
+
+}
+
+.sub-title strong {
+  font-size: 17px;
+  color: #000000;
+  text-shadow:
+        1px 1px #cccccc, /*文字の右下に影を追加*/
+        1px -1px #cccccc,/*文字の右上に影を追加*/
+        -1px 1px #cccccc,/*文字の左下に影を追加*/
+        -1px -1px #cccccc;/*文字の左上に影を追加*/
+
 }
 
 .btn {
+  margin-top: 20px;
   margin-right: 10px;
 }
 
 .top-item {
-   position: absolute;          
-   padding: 20px;           
-   top:  0;                     
-   bottom:  0;                  
-   left:  0;                  
-   right:  0;                 
-   margin:  auto;               
-   width:  350px;               
-   height: 80px;                
+   position: absolute;
+   padding: 20px;
+   top:  0;
+   bottom:  0;
+   left:  0;
+   right:  0;
+   margin:  auto;
+   width:  350px;
+   height: 80px;
 }
+
 
 
 

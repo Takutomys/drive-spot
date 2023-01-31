@@ -1,36 +1,43 @@
 class EndUser < ApplicationRecord
+  GUEST_USER_EMAIL = "guest@example.com"
+
   has_many :tweets, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  has_many :comments, dependent: :destroy 
+  has_many :comments, dependent: :destroy
   has_many :follower, class_name: "Follow", foreign_key: "follower_id", dependent: :destroy
   has_many :followed, class_name: "Follow", foreign_key: "followed_id", dependent: :destroy
-  has_many :following_end_user, through: :follower, source: :followed 
-  has_many :follower_end_user, through: :followed, source: :follower 
-  
+  has_many :following_end_user, through: :follower, source: :followed
+  has_many :follower_end_user, through: :followed, source: :follower
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
   def follow(end_user_id)
     follower.create(followed_id: end_user_id)
-  end 
-  
+  end
+
   def unfollow(end_user_id)
     follower.find_by(followed_id: end_user_id).destroy
   end
-  
+
    def following?(end_user)
     following_end_user.include?(end_user)
    end
 
   def self.guest
-    find_or_create_by!(email: 'guest@example.com', screen_name: 'ゲストユーザー') do |end_user|
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |end_user|
       end_user.password = SecureRandom.urlsafe_base64
+      end_user.screen_name = "ゲストユーザー"
     end
+  end
+
+  def guest?
+    email == GUEST_USER_EMAIL
   end
 
   enum gender: { male: 0, female: 1, others: 2 }
   enum status: { nonreleased: 0, released: 1 }
- 
+
 
   has_one_attached :profile_image
 

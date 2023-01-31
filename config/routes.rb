@@ -24,6 +24,9 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
         resources :tweets, only: [:show, :edit, :index, :update, :new, :create, :destroy] do
           resource :favorites, only: [:create, :destroy]
           resources :comments, only: [:create, :destroy]
+          collection do
+            get 'search'
+          end
         end
   end
 

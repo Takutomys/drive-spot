@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::SessionsController < Devise::SessionsController
+  skip_before_action :authenticate_end_user!
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -19,9 +20,9 @@ class Admin::SessionsController < Devise::SessionsController
   # end
 
   protected
-  
+
   def after_sign_in_path_for(resource)
-    admin_end_users_path
+     admin_end_users_path
   end
 
   def after_sign_out_path_for(resource)
