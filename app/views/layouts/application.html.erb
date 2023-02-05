@@ -12,6 +12,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/f8248e3c0f.js" crossorigin="anonymous"></script>
   </head>
     <header class="sticky-top">
       <% if notice %>
@@ -30,7 +31,7 @@
                   <%= link_to root_path, class: "navbar-item" do %>
                     <i class="fas fa-home"></i>
                     <p style="font-size:5px;">トップ</p>
-                  <% end %>  
+                  <% end %>
                 </div>
               </li>
               <li class="nav-item">
@@ -38,7 +39,7 @@
                   <%= link_to end_user_path(current_end_user), class: "navbar-item" do %>
                     <i class="fas fa-user-alt"></i>
                     <p style="font-size:5px;">マイページ</p>
-                  <% end %>  
+                  <% end %>
                 </div>
               </li>
               <li class="nav-item">
@@ -46,7 +47,7 @@
                   <%= link_to new_tweet_path, class: "navbar-item" do %>
                     <i class="fas fa-map-marked-alt"></i>
                     <p style="font-size:5px;">投稿</p>
-                  <% end %>  
+                  <% end %>
                 </div>
               </li>
               <li class="nav-item">
@@ -54,7 +55,7 @@
                   <%= link_to tweets_path, class: "navbar-item" do %>
                     <i class="fas fa-map-marker-alt"></i>
                     <p style="font-size:5px;">投稿一覧</p>
-                  <% end %>  
+                  <% end %>
                 </div>
               </li>
               <li class="nav-item">
@@ -63,7 +64,7 @@
                     <i class="fas fa-sign-out-alt"></i>
                     <p style="font-size:5px;">ログアウト</p>
                   <% end %>
-                </div>  
+                </div>
               </li>
               <% elsif admin_signed_in? %>
                 <li class="nav-item">
@@ -71,7 +72,7 @@
                     <%= link_to admin_end_users_path, class: "navbar-item" do %>
                       <i class="far fa-user"></i>
                       <p style="font-size:5px;">ユーザー一覧</p>
-                    <% end %>  
+                    <% end %>
                   </div>
                 </li>
                 <li class="nav-item">
@@ -81,7 +82,7 @@
                       <p style="font-size:5px;">ログアウト</p>
                     <% end %>
                   </div>
-                </li>  
+                </li>
             <% end %>
           </ul>
         </div>
