@@ -1,0 +1,124 @@
+<div class="row h-100">
+  <div class="tweet col-3">
+    <div class="tweet-form">
+      <h2 class="pt-3">編集画面</h2>
+      <%= form_with model: @tweet do |f| %>
+      <div class="form_group">
+         <label class="file-upload-field">
+          <%= f.file_field :image, accept: "image/*", class: 'file-input d-none' %>
+          <i class="fas fa-camera-retro"></i> 画像を選択
+        </label>
+        <p class="file-input-name">選択されていません</p>
+      </div>
+      <div class="pt-2 form-group">
+        <%= f.label :spot_name, "スポット名" %><br>
+        <%= f.text_field :spot_name, class:"form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :introduction, "おすすめポイント" %><br>
+        <%= f.text_area :introduction, class:"form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :latitude, "経度" %>
+        <%= f.text_field :latitude, id: :lat, class:"form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :longitude, "緯度" %><br>
+        <%= f.text_field :longitude, id: :lng, class:"form-control" %>
+      </div>
+      <div>
+        <%= f.submit "保存する", class: 'btn btn-primary' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-9 map", style="padding: 0">
+    <div class="text-center pb-2">
+      <p class="pt-1">投稿する場所を検索</p>
+      <input name="tweet[address]" id="address" type="textbox">
+      <input type="button" value="検索" onclick="codeAddress()">
+    </div>
+    <div id='map'>
+    </div>
+  </div>
+
+  <style>
+    #map{
+      height: 88.9%;
+    }
+  </style>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
+  <script>
+  console.log('here');
+  let map;
+  let marker;
+  let infoWindow;
+  const tweet_latitude = gon.tweet_latitude;
+  const tweet_longitude = gon.tweet_longitude;
+
+  function initMap(){
+    geocoder = new google.maps.Geocoder()
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: parseFloat(tweet_latitude), lng: parseFloat(tweet_longitude) },
+      zoom: 12
+    });
+
+    marker = new google.maps.Marker({
+        map: map,
+        position: {lat: parseFloat(tweet_latitude), lng: parseFloat(tweet_longitude) },
+        draggable: true // ドラッグ可能にする
+    });
+
+    // マーカーのドロップ（ドラッグ終了）時のイベント
+    google.maps.event.addListener(marker, 'dragend', function(ev){
+        // イベントの引数evの、プロパティ.latLngが緯度経度
+        document.getElementById('lat').value = ev.latLng.lat();
+        document.getElementById('lng').value = ev.latLng.lng();
+    });
+  }
+
+  let geocoder
+  let aft
+  function codeAddress(){
+    let inputAddress = document.getElementById('address').value;
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+      if (status == 'OK') {
+        //マーカーが複数できないようにする
+        if (aft == true){
+            marker.setMap(null);
+        }
+
+        //新しくマーカーを作成する
+        map.setCenter(results[0].geometry.location);
+            marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            draggable: true // ドラッグ可能にする
+        });
+
+        //二度目以降か判断
+        aft = true
+
+        //検索した時に緯度経度を入力する
+        document.getElementById('lat').value = results[0].geometry.location.lat();
+        document.getElementById('lng').value = results[0].geometry.location.lng();
+
+        // マーカーのドロップ（ドラッグ終了）時のイベント
+        google.maps.event.addListener( marker, 'dragend', function(ev){
+            // イベントの引数evの、プロパティ.latLngが緯度経度
+            document.getElementById('lat').value = ev.latLng.lat();
+            document.getElementById('lng').value = ev.latLng.lng();
+        });
+     } else {
+       alert('該当する結果がありませんでした：' + status);
+     }
+   });
+ }
+
+$('.file-input').on('change', function () {
+ const file = $(this).prop('files')[0];
+  $('.file-input-name').text(file.name);
+});
+</script>

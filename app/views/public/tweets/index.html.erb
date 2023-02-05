@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="tweet col-3">
+    <div class="row justify-content-center">
+　    <h2 class="pt-3">新着投稿</h2>
+　  </div>
+　　<% @tweets.each do |tweet| %>
+　　<div class="d-flex justify-content-start">
+　　  <div class="profile">
+　　    <% if tweet.end_user.profile_image.present?  %>
+　　　    <%= image_tag tweet.end_user.profile_image, size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+　　　  <% else %>
+　　　    <%= image_tag "no_image.jpg", size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+　　　  <% end %>
+　　　</div>
+　　　<div class="screen_name">
+　　　  ユーザー名: <%= tweet.end_user.screen_name %>
+　　　</div>
+　  </div>
+　  <div class="tweet_img">
+      <%= image_tag tweet.get_image %>
+    </div>
+    <div class="d-flex tweet_thoughts">
+      <div>
+        <% if tweet.favorited_by?(current_end_user) %>
+          <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
+            <i class="fa-solid fa-heart fa-fw faa-wrench animated-hover" style="color: #ff6347;"></i><%= tweet.favorites.count %> いいね
+          <% end %>
+        <% else %>
+          <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
+            <i class="far fa-heart" style="color: #ff6347;"></i><%= tweet.favorites.count %> いいね
+          <% end %>
+        <% end %>
+      </div>
+      <div class="offset-1">
+        <i class="fa-solid fa-comment" style="color: #FFFFFF;"></i>
+        <%= "コメント #{tweet.comments.count}" %>
+      </div>
+    </div>
+    <div class="tweet_prefectures font-weight-bold">
+      <%= tweet.prefectures %>
+    </div>
+    <div class="tweet_title font-weight-bold">
+      <%= tweet.spot_name %>
+    </div>
+    <div class="tweet_date">
+      <%= tweet.created_at.strftime('%Y/%m/%d') %>
+    </div>
+    <div class="tweet-btn">
+      <%= link_to "編集", edit_tweet_path(tweet), class: "btn btn-secondary" %>
+      <%= link_to "詳細ページへ", tweet_path(tweet), class: "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+  <% if @tweets.present? %>
+  <div class="col-9 map" style="padding: 0">
+    <div class="row justify-content-center pt-2">
+      <%= form_with url: tweets_path, method: :get, local: true do |f| %>
+        <P>キーワードで検索（ユーザー名・スポット名）<%= f.text_field :search %>
+        <%= f.submit '検索する' %></p>
+      <% end %>
+    </div>
+    <div id='map'>
+    </div>
+    <% else %>
+      <div class="offset-2 mt-5">
+        <h1>投稿がありません</h1>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  #map{
+   height: 95.75%;
+  }
+</style>
+<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
+<script>
+let map;
+let marker = []; // マーカーを複数表示させたいので、配列化
+let infoWindow = []; // 吹き出しを複数表示させたいので、配列化
+const tweets = gon.tweets; // コントローラーで定義したインスタンス変数を変数に代入
+const first_latitude = gon.first_latitude; // コントローラーで定義したインスタンス変数を変数に代入
+const first_longitude = gon.first_longitude; // コントローラーで定義したインスタンス変数を変数に代入
+
+
+function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: parseFloat(first_latitude), lng: parseFloat(first_longitude)},
+    zoom: 12
+  });
+
+  // forは繰り返し処理
+  // 変数iを0と定義し、
+  // その後gonで定義したusers分繰り返し加える処理を行う
+  for (let i = 0; i < tweets.length; i++) {
+    marker[i] = new google.maps.Marker({
+        map: map,
+        position: {lat: tweets[i].latitude, lng: tweets[i].longitude }
+    });
+
+    // 変数iを変数idに代入
+    let id = tweets[i]['id']
+    // infoWindowは吹き出し
+    infoWindow[i] = new google.maps.InfoWindow({
+    // contentで中身を指定
+    // 今回は文字にリンクを貼り付けた形で表示
+      content: `<a href='/tweets/${id}'>${tweets[i].name}</a>`
+    });
+    // markerがクリックされた時、
+    marker[i].addListener("click", function(){
+        // infoWindowを表示
+        infoWindow[i].open(map, marker[i]);
+    });
+  }
+}
+
+</script>

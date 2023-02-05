@@ -1,0 +1,20 @@
+<div class="top-page">
+  <div class="top-item">
+    <div class="row justify-content-center">
+      <h1 class="title">Drive spot</h1>
+    </div>
+    <div class="row justify-content-center">
+      <div class="sub-title">
+        <strong>おすすめのドライブスポットを共有しよう！</strong> 
+      </div>
+    </div>
+    <% unless end_user_signed_in? %>
+    <div class="row justify-content-center">
+      <div class"btn">
+        <%= link_to "新規登録", new_end_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to 'ログイン', new_end_user_session_path, class: "btn btn-success" %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="cover-end_user-index">
+  <div class="container">
+    <div class="row justify-content-center">
+      <h1 class="font-weight-normal mt-5 mb-5">フォロー一覧</h1>
+    </div>
+    <div class="row justify-content-center">
+      <% @end_users.each do |end_user| %>
+      <div class="one-post card w-100">
+        <p class="caption h4">ユーザー名：<%= link_to end_user.screen_name, end_user_path(end_user) %></p>
+        <div class="ml-3">
+          <% if end_user.profile_image.attached? %>
+            <%= image_tag end_user.profile_image, size: "50x50", class:"rounded-circle mx-auto border border-dark" %>
+          <% else %>
+            <%= image_tag "no_image.jpg", size: "50x50",class:"rounded-circle mx-auto" %>
+          <% end %>
+        </div> 
+        <div class="offset-1">
+          <h5><%= end_user.biography %></h5>
+        </div>  
+        <p class="caption"><%= "#{end_user.tweets.count} 投稿" %></p>
+      </div>
+      <% end %>
+    </div>
+    <%= paginate @end_users %>
+  </div>
+</div>

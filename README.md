@@ -24,8 +24,14 @@ Things you may want to cover:
 ## 設計書
 ### 実装機能リスト
 https://docs.google.com/spreadsheets/d/1DiSYUDHE6fqkJNZP4KGzNTApe_IDe5SrTgDYIe0QANU/edit?usp=sharing
-
-
+### 画面遷移図
+https://docs.google.com/spreadsheets/d/1oMouv867Qk721LFM6ukCMDGhEa26LId_rahkJJrYPUY/edit?usp=sharing
+### ER図
+https://drive.google.com/file/d/1XgO_r1SegH1MPkedOhUADR_y2FK7SYwH/view?usp=sharing
+### テーブル定義書
+https://docs.google.com/spreadsheets/d/1KntFHRaN26RGDn8C6Y4lkE94jw0zCw0wWBv3wI0Upe4/edit?usp=sharing
+### アプリケーション詳細設計
+https://docs.google.com/spreadsheets/d/1HcDvL8dE-5xQGHOtC7GY8pXFJZDpB03BLQs4yPid7SA/edit?usp=sharing
 
 ## 開発環境
 - OS：Linux(CentOS)
