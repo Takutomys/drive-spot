@@ -3,7 +3,8 @@
   <head>
     <%= favicon_link_tag('favicon.ico') %>
     <title>Drive_spot</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -15,9 +16,6 @@
     <script src="https://kit.fontawesome.com/f8248e3c0f.js" crossorigin="anonymous"></script>
   </head>
     <header class="sticky-top">
-      <% if notice %>
-      <p class="text-center"><%= notice %></p>
-      <% end %>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -88,6 +86,9 @@
         </div>
       </nav>
     </header>
+    <% if notice %>
+      <p class="text-center"><%= notice %></p>
+    <% end %>
    <body>
      <%= yield %>
    </body>
