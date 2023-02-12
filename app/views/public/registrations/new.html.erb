@@ -22,21 +22,17 @@
         <div class="box-gender-title">
           <%= f.label :gender, "性別" %>
         </div>
-        
-        <div class="box-gender-input-list">
-          
-          <div class="box-gender-input-list-radio">
-            <%= f.radio_button :gender, "others" %>
-            <%= f.label :gender, "指定なし" %>
-          </div>
-          <div class="box-gender-input-list-radio">
-            <%= f.radio_button :gender, "male" %>
-            <%= f.label :gender, "男性" %>
-          </div>
-          <div class="box-gender-input-list-radio">
-            <%= f.radio_button :gender, "female" %>
-            <%= f.label :gender, "女性" %>
-          </div>
+        <div class="box-gender-input-list-radio">
+          <%= f.radio_button :gender, "others" %>
+          <%= f.label :gender, "指定なし", value: "others" %>
+        </div>
+        <div class="box-gender-input-list-radio">
+          <%= f.radio_button :gender, "male" %>
+          <%= f.label :gender, "男性", value: "male" %>
+        </div>
+        <div class="box-gender-input-list-radio">
+          <%= f.radio_button :gender, "female" %>
+          <%= f.label :gender, "女性",value: "female" %>
         </div>
       </div>
 
@@ -68,5 +64,5 @@
     </div>
   </div>
 </div>
-<%= render "public/shared/error_messages", resource: resource %>
+
 

@@ -13,6 +13,7 @@ ja:
         remember_me: ログインを記憶する
         reset_password_sent_at: パスワードリセット送信時刻
         sign_in_count: ログイン回数
+        email: メールアドレス
     models:
       end_user: ユーザ
   devise:

@@ -41,3 +41,5 @@ https://docs.google.com/spreadsheets/d/1HcDvL8dE-5xQGHOtC7GY8pXFJZDpB03BLQs4yPid
 - IDE：Cloud9
 
 ## 使用素材
+###ぱくたそ
+###イラストAC
