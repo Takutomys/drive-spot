@@ -11,8 +11,9 @@ ja:
   activerecord:
     attributes:
       tweet:
-        name: "スポット名"
+        spot_name: "スポット名"
         introduction: "おすすめポイント"
+        prefectures: "都道府県名"
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

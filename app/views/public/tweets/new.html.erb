@@ -1,5 +1,13 @@
 <div class="row h-100">
-  <div class="tweet col-3">
+  <div class="col-sm-9 map order-sm-2" style="padding: 0">
+    <div class="text-center pb-2">
+      <p class="pt-1">投稿する場所を検索</p>
+      <input name="tweet[address]" id="address" type="textbox">
+      <input type="button" value="検索" onclick="codeAddress()">
+    </div>
+    <div id='map'></div>
+  </div>
+  <div class="tweet col-sm-3 order-sm-1">
     <div class="tweet-form">
       <h2 class="pt-3">新規投稿</h2>
       <%= form_with model: @tweet, url: tweets_path, method: :post do |f| %>
@@ -43,24 +51,21 @@
           <% end %>
         </ul>
       </div>
-   <% end %>
-  </div>
-
-  <div class="col-9 map" style="padding: 0">
-    <div class="text-center pb-2">
-      <p class="pt-1">投稿する場所を検索</p>
-      <input name="tweet[address]" id="address" type="textbox">
-      <input type="button" value="検索" onclick="codeAddress()">
-    </div>
-    <div id='map'>
-    </div>
+    <% end %>
   </div>
 </div>
 
+
 <style>
-#map{
-  height: 88.9%;
-}
+  #map{
+    height: calc(100% - 80px);
+  }
+  @media all and (max-width: 576px) {
+    #map {
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
+  }
 </style>
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>
 <script>

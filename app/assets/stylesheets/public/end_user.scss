@@ -6,8 +6,9 @@
   display: flex;
   flex-wrap: wrap
 }
+
 .tweet_image{
-  width: 25%
+ margin: 10px;
 }
 
 .form_profile_image {
@@ -41,4 +42,11 @@ label + label {
   background-size: cover;
   width: 100%;
 }
+
+.thum-img{
+	width: 150px;
+	height: 110px;
+	object-fit: cover;
+}
+
 

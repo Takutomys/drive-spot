@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-4 ">
+    <div class="col-sm-4 ">
       <div class="row justify-content-center mb-4">
         <% if @end_user.profile_image.attached? %>
           <%= image_tag @end_user.profile_image, size: "200x200", class:"rounded-circle mx-auto border border-dark" %>
@@ -32,7 +32,7 @@
           </tr>
           <tr>
             <div class="row">
-                <td class="align-middle text-center col-6">
+                <td class="align-middle text-center col-sm-6">
                 <%= link_to follows_end_user_path(@end_user.id),class:"mr-5" do %>
                   フォロー<%= @following_end_users.count %>
                 <% end %>
@@ -56,7 +56,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-lg-8 mt-4">
+    <div class="col-sm-8 mt-4">
       <h2 class="mb-4 text-center">投稿一覧</h2>
       <div class="images">
         <% @tweets.each do |tweet| %>
@@ -64,9 +64,9 @@
           <%= link_to tweet_path(tweet.id) do %>
           <div class="img">
             <% if tweet.image.attached? %>
-              <%= image_tag tweet.image, format: 'jpeg', size: '150x110' %>
+              <%= image_tag tweet.image, format: 'jpeg', class: 'thum-img' %>
             <% else %>
-              <%= image_tag ("no_image.jpg"), format: 'jpeg', size: '150x110' %>
+              <%= image_tag ("no_image.jpg"), format: 'jpeg', class: 'thum-img' %>
             <% end %>
           </div>
           <% end %>

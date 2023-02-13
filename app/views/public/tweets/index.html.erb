@@ -1,5 +1,21 @@
 <div class="row">
-  <div class="tweet col-3">
+  <div class="col-sm-9 map order-sm-2" style="padding: 0">
+  <% if @tweets.present? %>
+    <div class="row justify-content-center pt-2">
+      <%= form_with url: tweets_path, method: :get, local: true do |f| %>
+        <P>キーワードで検索（ユーザー名・スポット名)</p>
+        <%= f.text_field :search %>
+        <%= f.submit '検索する' %>
+      <% end %>
+    </div>
+    <div id='map'></div>
+  <% else %>
+    <div class="offset-2 mt-5">
+      <h1>投稿がありません</h1>
+    </div>
+  <% end %>
+  </div>
+  <div class="tweet col-sm-3 order-sm-1">
     <div class="row justify-content-center">
 　    <h2 class="pt-3">新着投稿</h2>
 　  </div>
@@ -17,19 +33,11 @@
 　　　</div>
 　  </div>
 　  <div class="tweet_img">
-      <%= image_tag tweet.get_image %>
+      <%= image_tag tweet.get_image, class: "w-100" %>
     </div>
     <div class="d-flex tweet_thoughts">
       <div>
-        <% if tweet.favorited_by?(current_end_user) %>
-          <%= link_to tweet_favorites_path(tweet), method: :delete, class: "favorite_btn" do %>
-            <i class="fa-solid fa-heart fa-fw faa-wrench animated-hover" style="color: #ff6347;"></i><%= tweet.favorites.count %> いいね
-          <% end %>
-        <% else %>
-          <%= link_to tweet_favorites_path(tweet), method: :post, class: "favorite_btn" do %>
-            <i class="far fa-heart" style="color: #ff6347;"></i><%= tweet.favorites.count %> いいね
-          <% end %>
-        <% end %>
+        <p>いいね！<i class="fa-solid fa-heart fa-fw faa-wrench animated-hover" style="color: #ff6347;"></i> <%= tweet.favorites.count %></p>
       </div>
       <div class="offset-1">
         <i class="fa-solid fa-comment" style="color: #FFFFFF;"></i>
@@ -51,28 +59,18 @@
     </div>
     <% end %>
   </div>
-
-  <% if @tweets.present? %>
-  <div class="col-9 map" style="padding: 0">
-    <div class="row justify-content-center pt-2">
-      <%= form_with url: tweets_path, method: :get, local: true do |f| %>
-        <P>キーワードで検索（ユーザー名・スポット名）<%= f.text_field :search %>
-        <%= f.submit '検索する' %></p>
-      <% end %>
-    </div>
-    <div id='map'>
-    </div>
-    <% else %>
-      <div class="offset-2 mt-5">
-        <h1>投稿がありません</h1>
-      </div>
-    <% end %>
-  </div>
 </div>
+
 
 <style>
   #map{
-   height: 95.75%;
+   height: calc(100% - 76px);
+  }
+  @media all and (max-width: 576px) {
+    #map {
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
   }
 </style>
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"></script>

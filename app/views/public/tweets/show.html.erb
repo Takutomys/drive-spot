@@ -3,8 +3,8 @@
     <div class="row justify-content-center">
       <h1 class="font-weight-normal mt-3">ドライブスポット投稿詳細</h1>
     </div>
-    <div class="d-flex">
-      <div class="row justify-content-center d-block">
+    <div class="row">
+      <div class="col-sm-4 order-sm-1">
         <%= link_to end_user_path(@tweet.end_user) do %>
         <p class="caption">ユーザー名 : <%= @tweet.end_user.screen_name %></p>
         <%= image_tag @tweet.get_image %>
@@ -24,29 +24,45 @@
         <%= link_to '投稿一覧ページへ', tweets_path, class: "btn btn-dark mt-3" %>
       </div>
 
-      <div class="comments offset-2 mt-4">
-      <div id='map'></div>
-        <%= form_with(model:[@tweet, @comment], local: true) do |f| %>
-          <%= f.text_area :comment, :size=>"60x3",placeholder: "コメントする" %>
-          <%= f.submit "送信する", class: "btn btn-success mb-4" %>
-        <% end %>
-
-        <p>コメント件数：<%= @comments.count %></p>
-          <% @comments.each do |comment| %>
-          <div class="comments-index mb-2">
-            <%= comment.end_user.screen_name %>
-            <%= comment.created_at.strftime('%Y/%m/%d') %><br>
-            <div class="d-flex">
-              <%= comment.comment %>
-              <% if comment.end_user == current_end_user %>
-              <div class="comment-delete">
-                <%= link_to "削除", tweet_comment_path(comment.tweet, comment), method: :delete, class: "btn-sm btn-danger" %>
+      <div class="col-sm-7 order-sm-2" style="padding-top: 12px;" >
+        <div class="comments offset-2 mt-4">
+          <div id='map'></div>
+            <%= form_with(model:[@tweet, @comment], local: true) do |f| %>
+              <%= f.text_area :comment,  style: "width:82%", rows: "3",placeholder: "コメントする" %>
+              <%= f.submit "送信する", class: "btn btn-success mb-4" %>
+            <% end %>
+            <div class="row">
+              <div class="col-sm-4">
+                <p>コメント件数：<%= @comments.count %></p>
+              </div>
+              <div class="col-sm-3">
+                <% if @tweet.favorited_by?(current_end_user) %>
+                  <%= link_to tweet_favorites_path(@tweet), method: :delete, class: "favorite_btn" do %>
+                <i class="fa-solid fa-heart fa-fw faa-wrench animated-hover" style="color: #ff6347;"></i><%= @tweet.favorites.count %> いいね
+                <% end %>
+                <% else %>
+                  <%= link_to tweet_favorites_path(@tweet), method: :post, class: "favorite_btn" do %>
+                  <i class="far fa-heart" style="color: #ff6347;"></i><%= @tweet.favorites.count %> いいね
+                <% end %>
+                <% end %>
               </div>
             </div>
-          </div>
-          <% end %>
-          <% end %>
-        <%= paginate @comments %>
+            <% @comments.each do |comment| %>
+            <div class="comments-index mb-2">
+              <%= comment.end_user.screen_name %>
+              <%= comment.created_at.strftime('%Y/%m/%d') %><br>
+              <div class="d-flex">
+                <%= comment.comment %>
+                <% if comment.end_user == current_end_user %>
+                <div class="comment-delete">
+                  <%= link_to "削除", tweet_comment_path(comment.tweet, comment), method: :delete, class: "btn-sm btn-danger" %>
+                </div>
+              </div>
+            </div>
+            <% end %>
+            <% end %>
+          <%= paginate @comments %>
+       </div>
     </div>
   </div>
 </div>
