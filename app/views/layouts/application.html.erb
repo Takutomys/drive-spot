@@ -15,12 +15,13 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://kit.fontawesome.com/f8248e3c0f.js" crossorigin="anonymous"></script>
   </head>
+  <body>
     <header class="sticky-top">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-          <%= image_tag 'drive.png', style:"width: 50px"%>
+        <%= image_tag 'drive.png', style:"width: 50px"%>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ml-auto">
             <% if end_user_signed_in? %>
@@ -85,11 +86,10 @@
           </ul>
         </div>
       </nav>
+        <% if notice %>
+          <p class="text-center"><%= notice %></p>
+        <% end %>
     </header>
-    <% if notice %>
-      <p class="text-center"><%= notice %></p>
-    <% end %>
-   <body>
-     <%= yield %>
-   </body>
+      <%= yield %>
+  </body>
 </html>

@@ -55,7 +55,7 @@
                 <%= comment.comment %>
                 <% if comment.end_user == current_end_user %>
                 <div class="comment-delete">
-                  <%= link_to "削除", tweet_comment_path(comment.tweet, comment), method: :delete, class: "btn-sm btn-danger" %>
+                  <%= link_to "削除", tweet_comment_path(comment.tweet, comment), method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn-sm btn-danger" %>
                 </div>
               </div>
             </div>
